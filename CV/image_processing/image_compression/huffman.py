@@ -23,6 +23,7 @@ class HuffmanCoding:
     def __init__(self):
         self.heap = []
         self.code = {}
+        self.tree = None
 
     def count_freq_dict(self, nums):
         # Count frequency and return as a dict
@@ -57,6 +58,7 @@ class HuffmanCoding:
             heapq.heappush(self.heap, merged)
 
         tree = heapq.heappop(self.heap)
+        self.tree = tree
 
         return tree
 
@@ -89,17 +91,32 @@ class HuffmanCoding:
         return out
 
     def decode(self, s):
-        pass
+        ans = ""
+        curr = self.tree  # Pointer to the root node
+
+        for i in range(len(s)):
+            if s[i] == "0":
+                curr = curr.left
+            else:
+                curr = curr.right
+
+            if not curr.left and not curr.right:
+                ans += str(curr.num)
+                curr = self.tree
+
+        return ans
 
 
 def main():
     np.random.seed(1)
     huff = HuffmanCoding()
     nums = np.random.randint(0, 5, size=30)
+    print(nums)
 
     ans = huff.encode(nums)
     print(ans)
     print(len(ans))
+    print(huff.decode(ans))
 
 
 if __name__ == '__main__':
