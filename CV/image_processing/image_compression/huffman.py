@@ -3,12 +3,13 @@ import heapq
 
 
 class Node:
-    def __init__(self, freq, num):
+    def __init__(self, freq, num=None):
         self.left = None
         self.right = None
+        self.num = num  # default None except for leaf nodes (original data)
         self.freq = freq
-        self.num = num
 
+    # Define comparison methods
     def __lt__(self, other):
         return self.freq < other.freq
 
@@ -26,7 +27,7 @@ class HuffmanCoding:
         self.tree = None
 
     def count_freq_dict(self, nums):
-        # Count frequency and return as a dict
+        # Count frequency and return dict
         out = dict()
         for i in nums:
             if i in out.keys():
@@ -91,7 +92,7 @@ class HuffmanCoding:
         return out
 
     def decode(self, s):
-        ans = ""
+        ans = []
         curr = self.tree  # Pointer to the root node
 
         for i in range(len(s)):
@@ -101,22 +102,23 @@ class HuffmanCoding:
                 curr = curr.right
 
             if not curr.left and not curr.right:
-                ans += str(curr.num)
+                ans.append(curr.num)
                 curr = self.tree
 
         return ans
 
 
 def main():
-    np.random.seed(1)
+    data = [3, 3, 3, 0, 0, 0, 0, 0, 0, 2, 3, 5, 5, 5,
+            5, 5, 4, 4, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    print("Input data: {}".format(data))
     huff = HuffmanCoding()
-    nums = np.random.randint(0, 5, size=30)
-    print(nums)
 
-    ans = huff.encode(nums)
-    print(ans)
-    print(len(ans))
-    print(huff.decode(ans))
+    encoded = huff.encode(data)
+    decoded = huff.decode(encoded)
+
+    print("Encoded data: {}".format(encoded))
+    print("Decoded data: {}".format(decoded))
 
 
 if __name__ == '__main__':
