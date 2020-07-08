@@ -60,7 +60,7 @@ class HuffmanCoding:
 
         tree = heapq.heappop(self.heap)
         self.tree = tree
-        
+
         return tree
 
     def create_code_dict(self, root, path):
@@ -68,7 +68,7 @@ class HuffmanCoding:
         if not root:
             return
 
-        if root.num is not None:
+        if root.num != None:
             self.code[root.num] = path
             return
 
@@ -119,8 +119,6 @@ def main():
 
     print("Encoded data: {}".format(encoded))
     print("Decoded data: {}".format(decoded))
-
-    print(huff.code)
 
 
 if __name__ == '__main__':
